@@ -1,0 +1,40 @@
+Metrics/ClassLength:
+  Enabled: false
+Metrics/BlockLength:
+ Enabled: false
+Metrics/MethodLength:
+  Enabled: false
+Layout/LineLength:
+  Max: 120
+Metrics/ParameterLists:
+  Enabled: false
+Metrics/AbcSize:
+  Enabled: false
+Metrics/CyclomaticComplexity:
+  Enabled: false
+Style/Documentation:
+  Enabled: false
+Style/FrozenStringLiteralComment:
+  Enabled: false
+Style/ClassAndModuleChildren:
+  Enabled: false
+Style/RedundantBegin:
+  Enabled: false
+Style/AsciiComments:
+  Enabled: false
+Style/SignalException:
+  Enabled: false
+Metrics/PerceivedComplexity:
+  Enabled: false
+Layout/TrailingEmptyLines:
+  Enabled: false
+AllCops:
+  TargetRubyVersion: 3.1
+  NewCops: enable
+  Exclude:
+    - 'db/migrate/*'
+    - 'config/**/*'
+    - 'bin/**/*'
+    - 'vendor/bundle/**/*'
+    - 'vendor/cache/**/*'
+    - 'db/schema.rb'

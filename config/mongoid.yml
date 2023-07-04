@@ -1,0 +1,6 @@
+development:
+  clients:
+    default:
+      uri: "<%= Rails.application.credentials.mongodb['url'] %>"
+      options:
+        server_selection_timeout: 1

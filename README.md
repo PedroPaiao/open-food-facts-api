@@ -38,7 +38,7 @@ Sumário
  - Ruby v3.1.2
      - Caso não tenha o ruby instalado, recomendo usar o [RVM](https://rvm.io/) para instala-lo.
  - Rails, '~> 7.0.6'
- - Mongodb 7.0
+ - MongoDB 7.0
  - Git
 
 <h3 id="docker-dependencies" align="left">Dependencias do Docker</h3>
