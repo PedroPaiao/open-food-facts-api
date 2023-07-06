@@ -25,7 +25,11 @@ gem 'kaminari-mongoid'
 # Open API 3.0 Docs
 gem 'rswag'
 
+# Serializer
 gem 'active_model_serializers', '~> 0.10.0'
+
+# Scrapper helpers
+gem 'httparty'
 
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 # gem "jbuilder"
