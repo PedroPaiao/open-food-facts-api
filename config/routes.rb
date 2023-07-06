@@ -1,10 +1,10 @@
 
 Rails.application.routes.draw do
-  root "welcome#index"
+  mount Rswag::Api::Engine => '/api-docs'
+  mount Rswag::Ui::Engine => '/api-docs'
   
-  namespace :Api do
-    namespace :V1 do
-      resources :products
-    end
-  end
+  resources :products
+  resources :welcome, only: [:index]
+
+  root "welcome#index"
 end
