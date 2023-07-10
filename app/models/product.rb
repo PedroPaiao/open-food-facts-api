@@ -9,7 +9,7 @@ class Product
 
   field :code, type: String
   field :barcode, type: String
-  field :imported_t, type: Date
+  field :imported_t, type: DateTime
   field :url, type: String
   field :product_name, type: String
   field :quantity, type: String

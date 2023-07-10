@@ -1,5 +1,5 @@
 class ProductSpider < BaseSpider::OpenFoodFactsApi
-  needs :product_code
+  needs :product_id
 
   steps :fetch_product,
         :fetch_html,
@@ -13,7 +13,7 @@ class ProductSpider < BaseSpider::OpenFoodFactsApi
   private
 
   def fetch_product
-    @product = Product.find_by(code: product_code)
+    @product = Product.find(product_id)
 
     fail(I18n.t('spiders.product_spider.errors.fetch_product')) if @product.blank?
   end
@@ -27,6 +27,7 @@ class ProductSpider < BaseSpider::OpenFoodFactsApi
   end
 
   def fetch_products
+
     @update_params = {
       code: @html.css('#barcode').text.strip,
       barcode: @html.css('#barcode_paragraph').text.strip.split(':').second.strip,

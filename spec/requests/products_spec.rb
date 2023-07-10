@@ -30,8 +30,8 @@ RSpec.describe '/products', type: :request do
     end
   end
 
-  path '/products/{id}' do
-    parameter name: :id,
+  path '/products/{code}' do
+    parameter name: :code,
               in: :path,
               type: :string,
               description: 'code of product',
@@ -42,7 +42,7 @@ RSpec.describe '/products', type: :request do
         examples
 
         let(:product) { create(:product) }
-        let(:id) { product.code }
+        let(:code) { product.code }
 
         run_test! do
           record = response.parsed_body

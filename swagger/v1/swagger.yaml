@@ -23,9 +23,9 @@ paths:
       responses:
         '200':
           description: successful
-  "/products/{id}":
+  "/products/{code}":
     parameters:
-    - name: id
+    - name: code
       in: path
       description: code of product
       required: true
