@@ -1,7 +1,8 @@
 class ProductSpider < BaseSpider::OpenFoodFactsApi
-  needs :product
+  needs :product_code
 
-  steps :fetch_html,
+  steps :fetch_product,
+        :fetch_html,
         :fetch_products,
         :persist_product
 
@@ -11,8 +12,14 @@ class ProductSpider < BaseSpider::OpenFoodFactsApi
 
   private
 
+  def fetch_product
+    @product = Product.find(product_code)
+
+    fail('Product not founded') if @product.blank?
+  end
+
   def fetch_html
-    response = @client.product(product.url)
+    response = @client.product(@product.url)
 
     return fail({ message: 'Fail to load html on specific product page' }) unless response.success
 
@@ -20,8 +27,6 @@ class ProductSpider < BaseSpider::OpenFoodFactsApi
   end
 
   def fetch_products
-    # name = @html.css('.card-section').css('h2')[1].text.strip
-    # TODO: Verify what is code field here
     @update_params = {
       barcode: @html.css('#barcode').text.strip,
       brands: @html.css('#field_brands').css('.field_value').text,
@@ -33,7 +38,7 @@ class ProductSpider < BaseSpider::OpenFoodFactsApi
   end
 
   def persist_product
-    product.update(@update_params)
+    @product.update_attributes!(@update_params)
   rescue Mongo::Error => e
     fail(e)
   end

@@ -1,0 +1,6 @@
+
+home_page_spider_schedule:
+  cron: '0 8 * * *'
+  class: DailyScrapperWorker
+  queue: default
+  description: 'This job fetch 100 products every day from Open Food Facts platform'

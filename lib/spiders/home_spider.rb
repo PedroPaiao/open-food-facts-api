@@ -5,6 +5,8 @@ class HomeSpider < BaseSpider::OpenFoodFactsApi
 
   def call
     process_steps
+
+    @new_products
   end
 
   private
@@ -36,7 +38,9 @@ class HomeSpider < BaseSpider::OpenFoodFactsApi
     Product.with_session do |s|
       s.start_transaction
 
-      Product.create(@products)
+      @products.each do |product|
+        Product.find_or_create_by(product)
+      end
 
       s.commit_transaction
     end

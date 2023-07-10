@@ -6,8 +6,13 @@ class ApplicationController < ActionController::API
 
     current, total, per_page = collection.current_page, collection.total_pages, collection.limit_value
 
+    serialized = ActiveModel::SerializableResource.new(
+      collection,
+      each_serializer: ProductSerializer
+    ).as_json
+
     {
-      data: collection,
+      data: serialized,
       pagination: {
         current:,
         previous: (current > 1 ? (current - 1) : nil),

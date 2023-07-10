@@ -3,9 +3,11 @@ class Product
   include Mongoid::Timestamps
   extend Enumerize
 
-  enumerize :status, in: %i[draft imported], default: :draft, scope: :status
+  enumerize :status, in: %i[draft imported], default: :draft, scope: :shallow
 
-  field :code, type: Integer
+  default_scope -> { order(imported_t: :asc) }
+
+  field :code, type: String, default: -> { _id }
   field :barcode, type: String
   field :imported_t, type: Date
   field :url, type: String
