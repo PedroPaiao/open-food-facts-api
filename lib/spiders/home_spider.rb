@@ -7,14 +7,12 @@ class HomeSpider < BaseSpider::OpenFoodFactsApi
     process_steps
   end
 
-  IMPORT_LIMIT_RANGE = [0..99]
-
   private
 
   def fetch_html
     response = @client.home_page
 
-    return fail(I18n.t('spiders.home_spider.errors.fetch_html')) unless response.success?
+    return fail(I18n.t('spiders.home_spider.errors.fetch_html')) unless response.success
 
     @html = response.result
   end
@@ -23,7 +21,7 @@ class HomeSpider < BaseSpider::OpenFoodFactsApi
     @products = []
     products_container = @html.css('.large-12.columns').first.css('li')
 
-    products_container[IMPORT_LIMIT_RANGE].each do |product|
+    products_container[0..99].each do |product|
       next if product.css('a').blank? || product.css('a').first.attribute('title').blank?
 
       params = {
