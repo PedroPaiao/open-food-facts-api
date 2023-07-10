@@ -1,6 +1,5 @@
 FactoryBot.define do
   factory(:product) do
-    code { 0 }
     barcode { Faker::Internet.email }
     imported_t { Faker::Internet.email }
     url { Faker::Internet.email }

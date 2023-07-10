@@ -2,20 +2,51 @@ require 'swagger_helper'
 
 RSpec.describe '/products', type: :request do
   path '/products' do
-    get('list products') do
+    parameter name: :page,
+              in: :query,
+              type: :integer,
+              description: 'page number',
+              required: false
+
+    parameter name: :per_page,
+              in: :query,
+              type: :integer,
+              description: 'number of products per page',
+              required: false
+
+    get('list only 10 products') do
       response(200, 'successful') do
-        let(:products) { create_list(:product, 2) }
+        examples
+
+        let(:page) { 1 }
+        let(:per_page) { 10 }
+        let!(:products) { create_list(:product, 20) }
 
         run_test! do
-          records = response.parsed_body['records']
-          expect(records.size).to eq(2)
+          records = response.parsed_body['data']
+          expect(records.size).to eq(10)
         end
-        after do |example|
-          example.metadata[:response][:content] = {
-            'application/json' => {
-              example: JSON.parse(response.body, symbolize_names: true)
-            }
-          }
+      end
+    end
+  end
+
+  path '/products/{id}' do
+    parameter name: :id,
+              in: :path,
+              type: :string,
+              description: 'code of product',
+              required: true
+
+    get('Show details of product') do
+      response(200, 'successful') do
+        examples
+
+        let(:product) { create(:product) }
+        let(:id) { product.code }
+
+        run_test! do
+          record = response.parsed_body
+          expect(record['code']).to eq(product.code)
         end
       end
     end

@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   mount Rswag::Ui::Engine => '/api-docs'
   
   resources :products
-  resources :welcome, only: [:index]
+  resources :welcome, only: [:index, :show]
 
   root "welcome#index"
 end

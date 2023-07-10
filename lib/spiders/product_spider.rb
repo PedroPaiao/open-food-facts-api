@@ -13,27 +13,29 @@ class ProductSpider < BaseSpider::OpenFoodFactsApi
   private
 
   def fetch_product
-    @product = Product.find(product_code)
+    @product = Product.find_by(code: product_code)
 
-    fail('Product not founded') if @product.blank?
+    fail(I18n.t('spiders.product_spider.errors.fetch_product')) if @product.blank?
   end
 
   def fetch_html
     response = @client.product(@product.url)
 
-    return fail({ message: 'Fail to load html on specific product page' }) unless response.success
+    return fail(I18n.t('spiders.product_spider.errors.fetch_product_page')) unless response.success
 
     @html = response.result
   end
 
   def fetch_products
     @update_params = {
-      barcode: @html.css('#barcode').text.strip,
+      code: @html.css('#barcode').text.strip,
+      barcode: @html.css('#barcode_paragraph').text.strip.split(':').second.strip,
       brands: @html.css('#field_brands').css('.field_value').text,
       quantity: @html.css('#field_quantity').css('.field_value').text,
       packaging: @html.css('p#field_packaging').css('.field_value').text.strip,
       categories: @html.css('p#field_categories').css('.field_value').text.strip,
-      imported_t: Time.now
+      imported_t: Time.now,
+      status: :imported
     }
   end
 

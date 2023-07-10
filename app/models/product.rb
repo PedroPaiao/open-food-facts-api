@@ -7,7 +7,7 @@ class Product
 
   default_scope -> { order(imported_t: :asc) }
 
-  field :code, type: String, default: -> { _id }
+  field :code, type: String
   field :barcode, type: String
   field :imported_t, type: Date
   field :url, type: String

@@ -3,6 +3,8 @@ version: '3.9'
 x-env: &env
   RAILS_ENV: development
   REDIS_URL: redis://redis:6379/1
+  SMTP_HOST: mailhog
+  SMTP_PORT: 1025
 
 services:
   open-food-facts-api:
@@ -26,6 +28,13 @@ services:
     image: redis:latest
     ports:
       - "6382:6379"
+  
+  mailhog:
+    image: mailhog/mailhog
+    container_name: 'mailhog'
+    ports:
+      - "1025:1025"
+      - "8025:8025"
 
   sidekiq:
     depends_on:
@@ -43,4 +52,3 @@ services:
 
 volumes:
   gem_cache:
-  db_data:

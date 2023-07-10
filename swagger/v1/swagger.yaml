@@ -5,8 +5,34 @@ info:
   version: v1
 paths:
   "/products":
+    parameters:
+    - name: page
+      in: query
+      description: page number
+      required: false
+      schema:
+        type: integer
+    - name: per_page
+      in: query
+      description: number of products per page
+      required: false
+      schema:
+        type: integer
     get:
-      summary: list products
+      summary: list only 10 products
+      responses:
+        '200':
+          description: successful
+  "/products/{id}":
+    parameters:
+    - name: id
+      in: path
+      description: code of product
+      required: true
+      schema:
+        type: string
+    get:
+      summary: Show details of product
       responses:
         '200':
           description: successful

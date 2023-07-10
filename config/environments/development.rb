@@ -14,6 +14,15 @@ Rails.application.configure do
   # Show full error reports.
   config.consider_all_requests_local = true
 
+  config.action_mailer.default_url_options = { host:'localhost', port: 3000 }
+
+  # SMTP configuration
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.smtp_settings = {
+    address: ENV.fetch("SMTP_HOST") { 'localhost' },
+    port: ENV.fetch("SMTP_PORT") { 1025 }
+  }
+
   # Enable server timing
   config.server_timing = true
 

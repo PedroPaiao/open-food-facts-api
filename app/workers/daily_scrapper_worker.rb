@@ -5,7 +5,7 @@ class DailyScrapperWorker
 
   def perform
     service = HomeSpider.call({})
-    ErrorReport.create(text: service.error) unless service.success?
+    return ErrorReport.create(text: service.error) unless service.success?
 
     Product.draft.each do |product|
       SpecificSpiderJob.perform_async(product.code)
